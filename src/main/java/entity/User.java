@@ -54,4 +54,14 @@ public class User {
     public void setSignupDate(LocalDate signupDate) {
         this.signupDate = signupDate;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", signupDate=" + signupDate +
+                '}';
+    }
 }
