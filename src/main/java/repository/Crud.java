@@ -7,7 +7,7 @@ public interface Crud {
     void saveAll(User[] users);
 
     void delete(int userId);
-    void update();
+    void update(User user);
     User load(int userId);
     void loadAll();
 }

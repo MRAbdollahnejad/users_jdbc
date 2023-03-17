@@ -67,8 +67,18 @@ public class UserRepository implements Crud {
 
 
     @Override
-    public void update() {
+    public void update(User user) {
+        String sqlQuery="update users set username=? ,user_password=? where user_id = ?";
+        try (Connection connection = JdbcConnection.getConnection();
+             PreparedStatement prestatement = connection.prepareStatement(sqlQuery)) {
+            prestatement.setString(1, user.getUsername());
+            prestatement.setString(2, user.getPassword());
+            prestatement.setInt(3, user.getUserId());
+            prestatement.executeUpdate();
 
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override
