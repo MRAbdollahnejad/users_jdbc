@@ -4,8 +4,9 @@ import entity.User;
 
 public interface Crud {
     void save(User user);
-    void saveAll();
-    void delete();
+    void saveAll(User[] users);
+
+    void delete(int userId);
     void update();
     void load();
     void loadAll();
