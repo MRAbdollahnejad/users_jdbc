@@ -33,6 +33,22 @@ public class UserRepository implements Crud {
 
     @Override
     public void saveAll(User[] users) {
+        String sqlQuery = "insert into users (username, user_password, signup_date) VALUES (?,?,?)";
+
+        try (Connection connection = JdbcConnection.getConnection();
+             PreparedStatement prestatement = connection.prepareStatement(sqlQuery)) {
+            for (User user : users) {
+                prestatement.setString(1, user.getUsername());
+                prestatement.setString(2, user.getPassword());
+                prestatement.setDate(3, Date.valueOf(LocalDate.now()));
+                prestatement.addBatch();
+            }
+            prestatement.executeBatch();
+
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
 
     }
 
