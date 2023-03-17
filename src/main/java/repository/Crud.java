@@ -9,5 +9,5 @@ public interface Crud {
     void delete(int userId);
     void update(User user);
     User load(int userId);
-    void loadAll();
+    User[] loadAll(int limit);
 }
