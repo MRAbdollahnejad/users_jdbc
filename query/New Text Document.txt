@@ -1,0 +1,7 @@
+create database jdbc;
+create table users (
+    user_id int not null generated always as identity ,
+    username varchar not null ,
+    user_password varchar not null ,
+    signup_date date
+);
