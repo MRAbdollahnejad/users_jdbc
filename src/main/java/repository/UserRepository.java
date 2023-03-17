@@ -32,14 +32,23 @@ public class UserRepository implements Crud {
     }
 
     @Override
-    public void saveAll() {
+    public void saveAll(User[] users) {
 
     }
 
     @Override
-    public void delete() {
+    public void delete(int userId) {
+        String sqlQuery="delete from users where user_id=? ";
 
+        try(Connection connection= JdbcConnection.getConnection();
+            PreparedStatement prestatement=connection.prepareStatement(sqlQuery)) {
+            prestatement.setInt(1, userId);
+            prestatement.execute();
+        }catch (Exception exception){
+            exception.printStackTrace();
+        }
     }
+
 
     @Override
     public void update() {
