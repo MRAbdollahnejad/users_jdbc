@@ -68,7 +68,7 @@ public class UserRepository implements Crud {
 
     @Override
     public void update(User user) {
-        String sqlQuery="update users set username=? ,user_password=? where user_id = ?";
+        String sqlQuery = "update users set username=? ,user_password=? where user_id = ?";
         try (Connection connection = JdbcConnection.getConnection();
              PreparedStatement prestatement = connection.prepareStatement(sqlQuery)) {
             prestatement.setString(1, user.getUsername());
@@ -101,9 +101,27 @@ public class UserRepository implements Crud {
         return user;
     }
 
-
     @Override
-    public void loadAll() {
+    public User[] loadAll(int limit) {
+        String sqlQuery = "select * from users  order by user_id limit ?";
 
+        User[] users = new User[limit];
+        try (Connection connection = JdbcConnection.getConnection();
+             PreparedStatement prestatement = connection.prepareStatement(sqlQuery)) {
+            prestatement.setInt(1, limit);
+            ResultSet resultSet = prestatement.executeQuery();
+            int index = 0;
+            while (resultSet.next()) {
+                users[index] = new User();
+                users[index].setUserId(resultSet.getInt("user_id"));
+                users[index].setPassword(resultSet.getString("user_password"));
+                users[index].setUsername(resultSet.getString("username"));
+                users[index].setSignupDate(resultSet.getDate("signup_date").toLocalDate());
+                index++;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return users;
     }
 }
