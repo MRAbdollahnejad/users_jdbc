@@ -8,6 +8,6 @@ public interface Crud {
 
     void delete(int userId);
     void update();
-    void load();
+    User load(int userId);
     void loadAll();
 }
